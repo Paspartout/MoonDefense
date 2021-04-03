@@ -1,0 +1,211 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://gfx/ui/theme.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/tutoiral.gd" type="Script" id=2]
+[ext_resource path="res://sfx/coin_01.wav" type="AudioStream" id=3]
+[ext_resource path="res://sfx/select.wav" type="AudioStream" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "MoveIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tutorial:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -89 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Tutorial:rect_rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "MoveOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tutorial:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -89 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Tutorial:rect_rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[node name="TutorialSection" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Tutorial" type="Panel" parent="."]
+margin_top = -89.0
+margin_right = 167.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="01_Movement" type="CenterContainer" parent="Tutorial"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 162.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/01_Movement"]
+margin_left = 17.0
+margin_top = 5.0
+margin_right = 141.0
+margin_bottom = 77.0
+
+[node name="Label" type="Label" parent="Tutorial/01_Movement/VBoxContainer"]
+margin_right = 124.0
+margin_bottom = 16.0
+text = "Movement"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/01_Movement/VBoxContainer"]
+margin_top = 20.0
+margin_right = 124.0
+margin_bottom = 72.0
+alignment = 1
+
+[node name="Buttons" type="GridContainer" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer"]
+margin_left = 17.0
+margin_right = 107.0
+margin_bottom = 52.0
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spacer" type="Control" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_right = 26.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="W" type="Button" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_left = 30.0
+margin_right = 60.0
+margin_bottom = 24.0
+text = "W"
+
+[node name="Spacer2" type="Control" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_left = 64.0
+margin_right = 90.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="A" type="Button" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_top = 28.0
+margin_right = 26.0
+margin_bottom = 52.0
+text = "A"
+
+[node name="S" type="Button" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_left = 30.0
+margin_top = 28.0
+margin_right = 60.0
+margin_bottom = 52.0
+text = "S"
+
+[node name="D" type="Button" parent="Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons"]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 90.0
+margin_bottom = 52.0
+text = "D"
+
+[node name="02_Shoot" type="CenterContainer" parent="Tutorial"]
+visible = false
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 162.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/02_Shoot"]
+margin_left = 8.0
+margin_top = 19.0
+margin_right = 150.0
+margin_bottom = 63.0
+
+[node name="Label" type="Label" parent="Tutorial/02_Shoot/VBoxContainer"]
+margin_right = 142.0
+margin_bottom = 16.0
+text = "Shoot"
+align = 1
+
+[node name="Buttons" type="GridContainer" parent="Tutorial/02_Shoot/VBoxContainer"]
+margin_top = 20.0
+margin_right = 142.0
+margin_bottom = 44.0
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Space" type="Button" parent="Tutorial/02_Shoot/VBoxContainer/Buttons"]
+margin_right = 142.0
+margin_bottom = 24.0
+text = "   Space   "
+
+[node name="DonePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="SelectPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/MoveIn = SubResource( 1 )
+anims/MoveOut = SubResource( 2 )
