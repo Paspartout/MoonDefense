@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/section_cleared.wav-4ff549c42adcd5d289292c363cce61e6.sample"
+
+[deps]
+
+source_file="res://sfx/section_cleared.wav"
+dest_files=[ "res://.import/section_cleared.wav-4ff549c42adcd5d289292c363cce61e6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

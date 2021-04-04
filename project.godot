@@ -17,17 +17,41 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://scripts/enemy.gd"
+"path": "res://scenes/enemies/enemy.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyBomber",
+"language": "GDScript",
+"path": "res://scenes/enemies/enemy_bomber/enemy_bomber.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyTargeter",
+"language": "GDScript",
+"path": "res://scenes/enemies/targeter/enemy_targeter.gd"
+}, {
+"base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://scripts/game.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/player.gd"
+}, {
+"base": "Node2D",
+"class": "Section",
+"language": "GDScript",
+"path": "res://scenes/sections/section.gd"
 } ]
 _global_script_class_icons={
 "Asteroid": "",
 "Enemy": "",
-"Player": ""
+"EnemyBomber": "",
+"EnemyTargeter": "",
+"Game": "",
+"Player": "",
+"Section": ""
 }
 
 [application]
@@ -51,9 +75,14 @@ window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
+[global]
+
+bullet=false
+
 [gui]
 
 theme/custom="res://gfx/ui/theme.tres"
+theme/custom_font="res://gfx/ui/font.tres"
 
 [importer_defaults]
 
@@ -110,13 +139,24 @@ shoot={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
  ]
 }
+debug_hurt={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"unicode":0,"echo":false,"script":null)
+ ]
+}
+debug_killall={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="world"
 2d_physics/layer_3="enemies"
-2d_physics/layer_4="bullet"
+2d_physics/layer_4="bullets"
+2d_physics/layer_5="enemy_bullets"
 2d_physics/layer_10="boundary"
 
 [physics]

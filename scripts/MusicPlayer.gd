@@ -7,8 +7,6 @@ var play_remaining_song = false
 
 func _ready():
 	connect("finished", self, "next_song")
-	get_node(tutorial_path).connect("done", self, "tutorial_done")
-	#play()
 
 func tutorial_done():
 	play_remaining_song = true

@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/enemies/enemy_bomber/enemy_bomber.tscn" type="PackedScene" id=3]
+
+[node name="4" type="Node2D"]
+
+[node name="EnemyBomber3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 535.04, 208 )
+
+[node name="EnemyBomber5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 535.04, 240 )
+
+[node name="EnemyBomber6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 535.04, 272 )
+
+[node name="EnemyBomber4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 573, 24 )
+direction = 1
+
+[node name="EnemyBomber7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 573, 56 )
+direction = 1
+
+[node name="EnemyBomber8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 573, 88 )
+scale = Vector2( 1.01538, 1.01198 )
+direction = 1

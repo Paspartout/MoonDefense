@@ -1,6 +1,4 @@
-extends Node2D
-
-signal cleared()
+extends Section
 
 onready var asteroids = $Asteroids
 
