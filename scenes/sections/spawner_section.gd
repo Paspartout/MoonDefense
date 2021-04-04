@@ -17,9 +17,9 @@ func _ready():
 	wave()
 
 func wave():
-	spawn(0, 0)
-	yield(self, "enemies_dead")
 	spawn(1, 0)
+	yield(self, "enemies_dead")
+	spawn(0, 0)
 	spawn(2, 0.5)
 	yield(self, "enemies_dead")
 	spawn(0, 0)

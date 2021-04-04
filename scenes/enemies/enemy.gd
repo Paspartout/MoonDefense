@@ -9,19 +9,38 @@ export var Explosion: PackedScene
 
 export var movement_speed: float = 100
 export var accuracy: float = 30
+export var starting_invul_sec: float = 1.0
 
 onready var act_timer: Timer = $ActTimer
 onready var shoot_timer: Timer = $ShootTimer
+onready var sprite: Sprite = $Sprite
+onready var invul_timer: Timer = $InvulTimer
+
+enum FlightDirection {UP, DOWN}
 
 var velocity: Vector2
 var player: Player
 var dead: bool = false
+var invulnerable: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	velocity = Vector2(0, 0)
+	invul_timer.one_shot = true
+	invul_timer.connect("timeout", self, "invul_timeout")
+	make_invul(1.0)
 	add_to_group("enemy")
 	_start()
+
+func make_invul(time: float):
+	invulnerable = true
+	sprite.material.set_shader_param("flash_white", true)
+	invul_timer.wait_time = time
+	invul_timer.start()
+
+func invul_timeout():
+	invulnerable = false
+	sprite.material.set_shader_param("flash_white", false)
 
 func _start():
 	act_coro()
@@ -35,7 +54,7 @@ func _physics_process(delta):
 			hurt()
 
 func hurt():
-	if not dead:
+	if not dead and not invulnerable:
 		dead = true
 		var e = Explosion.instance()
 		e.position = self.position
@@ -81,6 +100,19 @@ func shoot_at_player():
 	if velocity.x < 0:
 		b.velocity.x += velocity.x
 	get_parent().add_child(b)
+
+func move(direction: int, time: float):
+	velocity.y = movement_speed if direction == FlightDirection.DOWN else -movement_speed
+	yield(wait_act(time), "completed")
+	velocity.y = 0
+
+func shoot_burst(shots: int, delay: float, target=false):
+	for i in range(shots):
+		if target:
+			shoot_at_player()
+		else:
+			shoot_left()
+		yield(wait_shoot(delay), "completed")
 
 func _on_LifeTimer_timeout():
 	if position.x < 0:

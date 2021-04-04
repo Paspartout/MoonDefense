@@ -1,0 +1,14 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/sections/scenes_section.gd" type="Script" id=1]
+[ext_resource path="res://scenes/sections/02_bombers/01.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/sections/02_bombers/02.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/sections/02_bombers/03.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/sections/02_bombers/04.tscn" type="PackedScene" id=6]
+
+[node name="BombersSection" type="Node2D"]
+script = ExtResource( 1 )
+enemy_groups = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+group_delay_time = 1.0
+
+[node name="Enemies" type="Node2D" parent="."]

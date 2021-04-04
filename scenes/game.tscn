@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://gfx/ui/GravityBold8.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://gfx/ui/theme.tres" type="Theme" id=2]
@@ -11,19 +11,78 @@
 [ext_resource path="res://mus/song_start.ogg" type="AudioStream" id=9]
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=10]
 [ext_resource path="res://scripts/game.gd" type="Script" id=11]
-[ext_resource path="res://scenes/sections/02_easy_enemies/easy_enemies_section.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/sections/02_bombers/bombers_section.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/sections/01_asteroids/asteroid_section.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/sections/03_targeting_enemies/targeting_enemies_section.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/sections/03_fighters/fighters_section.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scripts/game_timer.gd" type="Script" id=16]
+[ext_resource path="res://gfx/background/Surface_Layer4.png" type="Texture" id=17]
+[ext_resource path="res://scenes/sections/00_base/base_section.tscn" type="PackedScene" id=18]
+[ext_resource path="res://gfx/earth.png" type="Texture" id=19]
+[ext_resource path="res://scripts/main_menu.gd" type="Script" id=20]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Animation" id=1]
+resource_name = "Appear"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 513, 65 ), Vector2( 366, 65 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, -2 ),
+"update": 0,
+"values": [ Vector2( 366, 65 ), Vector2( 513, 65 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10, 294.452 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "Success"
+[sub_resource type="Animation" id=5]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CenterContainer/Label:visible")
@@ -78,41 +137,121 @@ tracks/3/keys = {
 
 [node name="Main" type="Node2D"]
 
+[node name="BaseSection" parent="." instance=ExtResource( 18 )]
+position = Vector2( 0, 65 )
+
+[node name="Tutorial" parent="BaseSection" instance=ExtResource( 7 )]
+position = Vector2( 38, 287 )
+
+[node name="MainMenu" type="Node2D" parent="BaseSection"]
+script = ExtResource( 20 )
+game_path = NodePath("../../Game")
+
+[node name="Panel" type="Panel" parent="BaseSection/MainMenu"]
+margin_left = 513.0
+margin_top = 65.0
+margin_right = 656.006
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="BaseSection/MainMenu/Panel"]
+margin_left = -15.0
+margin_top = -33.0
+margin_right = 161.0
+margin_bottom = 2.0
+text = "Moon
+Defense"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BaseSection/MainMenu/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+margin_right = 123.0
+margin_bottom = 24.0
+text = "Start"
+
+[node name="Levels" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+margin_top = 28.0
+margin_right = 123.0
+margin_bottom = 52.0
+text = "Levels"
+
+[node name="Credits" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+margin_top = 56.0
+margin_right = 123.0
+margin_bottom = 80.0
+text = "Credits"
+
+[node name="Settings" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+margin_top = 84.0
+margin_right = 123.0
+margin_bottom = 108.0
+text = "Settigns"
+
+[node name="Exit" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+margin_top = 112.0
+margin_right = 123.0
+margin_bottom = 136.0
+text = "Exit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BaseSection/MainMenu"]
+anims/Appear = SubResource( 1 )
+anims/Disappear = SubResource( 2 )
+
 [node name="Game" type="Node2D" parent="."]
+position = Vector2( 0, 64 )
 script = ExtResource( 11 )
-movement_speed = 200.0
+__meta__ = {
+"_edit_group_": true
+}
 hud_path = NodePath("../HUDLayer/HUD")
 msg_box_path = NodePath("../HUDLayer/MsgBox")
-tutorial_path = NodePath("../HUDLayer/Tutorial")
-skip_tutorial = true
+tutorial_path = NodePath("../BaseSection/Tutorial")
+current_section = 0
 sections = [ ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ]
 
 [node name="CurrentSection" type="Node2D" parent="Game"]
 
+[node name="Player" parent="Game" instance=ExtResource( 15 )]
+position = Vector2( 176, 181 )
+controllable = false
+
 [node name="Boundaries" type="StaticBody2D" parent="Game"]
+visible = false
 collision_layer = 512
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Boundaries"]
 position = Vector2( -9.65075, 140.714 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/Boundaries"]
 position = Vector2( 522.3, 146.175 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Boundaries"]
 position = Vector2( 248.308, -11.1825 )
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/Boundaries"]
 position = Vector2( 241.021, 298.828 )
 rotation = 1.5708
-shape = SubResource( 1 )
-
-[node name="Player" parent="Game" instance=ExtResource( 15 )]
-position = Vector2( -2105.6, 53 )
+shape = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="Game"]
 
@@ -122,10 +261,9 @@ current = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource( 9 )
-autoplay = true
 bus = "Music"
 script = ExtResource( 6 )
-tutorial_path = NodePath("../../HUDLayer/Tutorial")
+tutorial_path = NodePath("../../BaseSection/Tutorial")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -133,27 +271,20 @@ tutorial_path = NodePath("../../HUDLayer/Tutorial")
 motion_scale = Vector2( 0.05, 1 )
 motion_mirroring = Vector2( 512, 0 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_lock_": true
 }
 
 [node name="stars" type="Sprite" parent="ParallaxBackground/StarLayer"]
 texture = ExtResource( 4 )
 centered = false
 
-[node name="CratersLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2( 0.5, 1 )
-motion_mirroring = Vector2( 128, 0 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
-}
+[node name="EarthLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 1 )
 
-[node name="Surface_Layer2" type="Sprite" parent="ParallaxBackground/CratersLayer"]
-position = Vector2( 1, 257 )
-texture = ExtResource( 5 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 512, 32 )
+[node name="earth" type="Sprite" parent="ParallaxBackground/EarthLayer"]
+position = Vector2( 57, 124 )
+texture = ExtResource( 19 )
 
 [node name="Mountains" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2( 0.2, 1 )
@@ -170,9 +301,40 @@ centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 512, 32 )
 
+[node name="CratersLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 128, 0 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Surface_Layer2" type="Sprite" parent="ParallaxBackground/CratersLayer"]
+position = Vector2( 1, 257 )
+texture = ExtResource( 5 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 32 )
+
+[node name="GroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.8, 1 )
+motion_mirroring = Vector2( 128, 0 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Surface_Layer4" type="Sprite" parent="ParallaxBackground/GroundLayer"]
+position = Vector2( 1, 289 )
+texture = ExtResource( 17 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 64 )
+
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="Panel" parent="HUDLayer"]
+visible = false
 margin_left = 4.0
 margin_top = 1.0
 margin_right = 71.0
@@ -188,14 +350,37 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 44.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "HP:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tutorial" parent="HUDLayer" instance=ExtResource( 7 )]
-position = Vector2( 347, -3 )
+[node name="Timer" type="Panel" parent="HUDLayer"]
+visible = false
+margin_left = 440.0
+margin_top = 1.0
+margin_right = 511.0
+margin_bottom = 25.0
+theme = ExtResource( 2 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeLabel" type="Label" parent="HUDLayer/Timer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 44.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 4 )
+text = "00:00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="HUDLayer/Timer"]
+autostart = true
 
 [node name="MsgBox" type="Panel" parent="HUDLayer"]
 visible = false
@@ -231,10 +416,12 @@ margin_bottom = 44.0
 text = "Section Cleared!"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUDLayer/MsgBox"]
-anims/Success = SubResource( 3 )
+anims/Success = SubResource( 5 )
 
 [node name="FxPlayer" type="AudioStreamPlayer" parent="HUDLayer/MsgBox"]
 stream = ExtResource( 8 )
 bus = "SFX"
 
-[node name="MainMenu" type="CanvasLayer" parent="."]
+[connection signal="pressed" from="BaseSection/MainMenu/Panel/VBoxContainer/Start" to="BaseSection/MainMenu" method="_on_Start_pressed"]
+[connection signal="pressed" from="BaseSection/MainMenu/Panel/VBoxContainer/Exit" to="BaseSection/MainMenu" method="_on_Exit_pressed"]
+[connection signal="timeout" from="HUDLayer/Timer/Timer" to="HUDLayer/Timer" method="_on_Timer_timeout"]

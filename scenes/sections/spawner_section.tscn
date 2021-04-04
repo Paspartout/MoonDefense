@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scenes/sections/03_targeting_enemies/targeting_enemies_section.gd" type="Script" id=1]
-[ext_resource path="res://scenes/enemies/targeter/enemy_targeter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/sections/spawner_section.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/fighter/fighter.tscn" type="PackedScene" id=2]
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource( 1 )

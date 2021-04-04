@@ -4,24 +4,24 @@
 [ext_resource path="res://sfx/shoot_01.wav" type="AudioStream" id=2]
 [ext_resource path="res://scenes/bullet.gd" type="Script" id=3]
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 193, 86, 13, 5 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 6.00237, 2.46512 )
 
 [node name="Bullet" type="KinematicBody2D"]
 collision_layer = 16
-collision_mask = 517
+collision_mask = 521
 script = ExtResource( 3 )
 speed = 300.0
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = SubResource( 2 )
+texture = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( -1.19209e-07, 2.98023e-08 )
@@ -29,6 +29,7 @@ scale = Vector2( 0.6, 0.25 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+bus = "SFX"
 
 [node name="LifeTimer" type="Timer" parent="."]
 wait_time = 5.0

@@ -45,7 +45,7 @@ func _input(event):
 		max_speed = SPEED
 
 	if Input.is_action_just_pressed("shoot"):
-		on_shoot()	
+		on_shoot()
 		$ShootTimer.start()
 	elif Input.is_action_just_released("shoot"):
 		$ShootTimer.stop()
@@ -85,6 +85,12 @@ func on_shoot():
 	b.position = position + Vector2(30, 0)
 	get_parent().add_child(b)
 
+func make_invul(time: float):
+	invulnerable = true
+	$AnimatedSprite.material.set_shader_param("flash_white", true)
+	$InvulTimer.wait_time = time
+	$InvulTimer.start()
+		
 func on_invul_over():
 	invulnerable = false
 	$AnimatedSprite.material.set_shader_param("flash_white", false)
@@ -101,12 +107,8 @@ func hurt():
 		queue_free()
 		emit_signal("died")
 	else:
-		invulnerable = true
+		make_invul(1.0)
 		$AudioStreamPlayer.stream = preload("res://sfx/hurt_01.wav")
 		$AudioStreamPlayer.play()
-		$AnimatedSprite.material.set_shader_param("flash_white", true)
-		$InvulTimer.start()
-
-
 
 

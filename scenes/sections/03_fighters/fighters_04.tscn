@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/enemies/fighter/fighter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/enemies/bomber/bomber.tscn" type="PackedScene" id=2]
+
+[node name="1" type="Node2D"]
+
+[node name="TopFighter" parent="." instance=ExtResource( 1 )]
+position = Vector2( 534, 32 )
+accuracy = 10.0
+between_burst_delay = 3.0
+burst_shots = 3
+
+[node name="BottomFighter" parent="." instance=ExtResource( 1 )]
+position = Vector2( 534, 255 )
+accuracy = 10.0
+shoot_start_delay = 2.0
+between_burst_delay = 3.0
+burst_shots = 3
+
+[node name="EnemyBomber" parent="." instance=ExtResource( 2 )]
+position = Vector2( 588, 164 )
+direction = 1
+hops = 3
+
+[node name="EnemyBomber2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 588, 123 )
+hops = 3

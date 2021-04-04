@@ -3,7 +3,7 @@ extends AudioStreamPlayer
 const song_remaining = preload("res://mus/song_remaining.ogg")
 
 export var tutorial_path: NodePath
-var play_remaining_song = false
+var play_remaining_song = true
 
 func _ready():
 	connect("finished", self, "next_song")

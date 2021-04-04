@@ -9,13 +9,13 @@ export var msg_box_path: NodePath
 export var tutorial_path: NodePath
 onready var msg_box: AnimationPlayer = get_node(msg_box_path).get_node("AnimationPlayer")
 onready var hud = get_node(hud_path)
-onready var tutorial = get_node(tutorial_path)
+onready var tutorial: Tutorial = get_node(tutorial_path)
 
+export var current_section: int = 1
 export var skip_tutorial: bool = false
 
 export(Array, PackedScene) var sections
 onready var n_sections = sections.size()
-var current_section: int = 1
 
 const PlayerScene = preload("res://scenes/player.tscn")
 var player: Player
@@ -35,21 +35,20 @@ func _input(event):
 		for enemy in enemies:
 			enemy.hurt()
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	# TODO: Intro Sequence
+func start():
 	player = setup_player($Player)
 	player.controllable = true
 	if skip_tutorial:
 		tutorial_done()
 		tutorial.queue_free()
 	else:
-		tutorial.connect("done", self, "tutorial_done")
+		tutorial.start()
+		tutorial.connect("done", self, "tutorial_done")	
 
 func setup_player(player: Player):
 	hud.set_player(player)
 	player.connect("died", self, "death")
-	player.position = Vector2(100, 100)
+	#player.position = Vector2(100, 100)
 	return player
 
 func spawn_player():
@@ -106,12 +105,19 @@ func respawn_player():
 
 func tutorial_done():
 	# Start Player/World Movement
+	$MusicPlayer.play()
+	tween.interpolate_property($".", "position",
+			null, Vector2(0, 0), 1,
+			Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	tween.start()
+	yield(tween, "tween_all_completed")
+	# Start Player/World Movement
 	tween.interpolate_property($".", "movement_speed",
 			0, 200, 1,
-			Tween.TRANS_QUAD, Tween.EASE_IN)
+			Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
-	$MusicPlayer.play_remaining_song = true
 
+	yield(get_tree().create_timer(3.0), "timeout")
 	load_section()
 
 func load_section():
@@ -120,6 +126,7 @@ func load_section():
 	$CurrentSection.add_child(next_section)
 
 func next_section():
+	player.make_invul(3.0)
 	msg_box.play("Success")
 	current_section += 1
 	yield(get_tree().create_timer(3.0), "timeout")

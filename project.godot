@@ -22,12 +22,12 @@ _global_script_classes=[ {
 "base": "Enemy",
 "class": "EnemyBomber",
 "language": "GDScript",
-"path": "res://scenes/enemies/enemy_bomber/enemy_bomber.gd"
+"path": "res://scenes/enemies/bomber/bomber.gd"
 }, {
 "base": "Enemy",
 "class": "EnemyTargeter",
 "language": "GDScript",
-"path": "res://scenes/enemies/targeter/enemy_targeter.gd"
+"path": "res://scenes/enemies/fighter/fighter.gd"
 }, {
 "base": "Node2D",
 "class": "Game",
@@ -39,10 +39,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/player.gd"
 }, {
+"base": "Section",
+"class": "ScenesSection",
+"language": "GDScript",
+"path": "res://scenes/sections/scenes_section.gd"
+}, {
 "base": "Node2D",
 "class": "Section",
 "language": "GDScript",
 "path": "res://scenes/sections/section.gd"
+}, {
+"base": "Node",
+"class": "Tutorial",
+"language": "GDScript",
+"path": "res://scripts/tutoiral.gd"
 } ]
 _global_script_class_icons={
 "Asteroid": "",
@@ -51,7 +61,9 @@ _global_script_class_icons={
 "EnemyTargeter": "",
 "Game": "",
 "Player": "",
-"Section": ""
+"ScenesSection": "",
+"Section": "",
+"Tutorial": ""
 }
 
 [application]

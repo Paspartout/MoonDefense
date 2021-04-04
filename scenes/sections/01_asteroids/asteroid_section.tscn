@@ -67,3 +67,103 @@ speed = 100.0
 [node name="Asteroid12" parent="Asteroids" instance=ExtResource( 2 )]
 position = Vector2( 1272, 203 )
 speed = 100.0
+
+[node name="Asteroid14" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1350, 219 )
+speed = 100.0
+
+[node name="Asteroid16" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1332, 119 )
+speed = 100.0
+
+[node name="Asteroid18" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1436, 106 )
+speed = 100.0
+
+[node name="Asteroid19" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1534, 222 )
+speed = 100.0
+
+[node name="Asteroid20" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1554, 89 )
+speed = 100.0
+
+[node name="Asteroid21" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1508, 45 )
+speed = 100.0
+
+[node name="Asteroid22" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1679, 190 )
+speed = 100.0
+
+[node name="Asteroid23" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1670, 59 )
+speed = 100.0
+
+[node name="Asteroid24" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1737, 53 )
+speed = 100.0
+
+[node name="Asteroid25" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1875, 75 )
+speed = 100.0
+
+[node name="Asteroid26" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1980, 66 )
+speed = 100.0
+
+[node name="Asteroid27" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1964, 137 )
+speed = 100.0
+
+[node name="Asteroid28" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1806, 144 )
+speed = 100.0
+
+[node name="Asteroid29" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 1897, 200 )
+speed = 100.0
+
+[node name="Asteroid31" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2083, 209 )
+speed = 100.0
+
+[node name="Asteroid32" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2103, 76 )
+speed = 100.0
+
+[node name="Asteroid33" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2057, 32 )
+speed = 100.0
+
+[node name="Asteroid34" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2228, 177 )
+speed = 100.0
+
+[node name="Asteroid35" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2219, 46 )
+speed = 100.0
+
+[node name="Asteroid36" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2286, 40 )
+speed = 100.0
+
+[node name="Asteroid37" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2424, 62 )
+speed = 100.0
+
+[node name="Asteroid38" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2529, 53 )
+speed = 100.0
+
+[node name="Asteroid39" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2513, 124 )
+speed = 100.0
+
+[node name="Asteroid40" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2355, 131 )
+speed = 100.0
+
+[node name="Asteroid41" parent="Asteroids" instance=ExtResource( 2 )]
+position = Vector2( 2446, 187 )
+speed = 100.0

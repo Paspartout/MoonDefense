@@ -1,26 +1,27 @@
+class_name Tutorial
 extends Node
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$AnimationPlayer.play("MoveIn")
+func start():
+	$AnimationPlayer.play("Appear")
+	enabled = true
 
 signal done()
 
+var enabled = false
 var movement = true
-var done = false
 
 onready var keys_dict = {
-	"move_up": $"Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons/W",
-	"move_down": $"Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons/S",
-	"move_right": $"Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons/D",
-	"move_left": $"Tutorial/01_Movement/VBoxContainer/HBoxContainer/Buttons/A",
-	"shoot": $"Tutorial/02_Shoot/VBoxContainer/Buttons/Space",
+	"move_up": $"Tutorial/01_Movement/HBoxContainer/Buttons/W",
+	"move_down": $"Tutorial/01_Movement/HBoxContainer/Buttons/S",
+	"move_right": $"Tutorial/01_Movement/HBoxContainer/Buttons/D",
+	"move_left": $"Tutorial/01_Movement/HBoxContainer/Buttons/A",
+	"shoot": $"Tutorial/02_Shoot/Space",
 }
 
 var correct = 0
 
 func _input(event):
-	if done:
+	if not enabled:
 		return
 	if movement:
 		for k in keys_dict.keys():
@@ -39,6 +40,6 @@ func _input(event):
 		if event.is_action("shoot"):
 			keys_dict["shoot"].disabled = true
 			$DonePlayer.play()
-			done = true
-			$AnimationPlayer.play("MoveOut")
+			enabled = false
+			$AnimationPlayer.play("Disappear")
 			emit_signal("done")
