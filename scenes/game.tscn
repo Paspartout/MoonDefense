@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://gfx/ui/GravityBold8.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://gfx/ui/theme.tres" type="Theme" id=2]
@@ -20,6 +20,11 @@
 [ext_resource path="res://scenes/sections/00_base/base_section.tscn" type="PackedScene" id=18]
 [ext_resource path="res://gfx/earth.png" type="Texture" id=19]
 [ext_resource path="res://scripts/main_menu.gd" type="Script" id=20]
+[ext_resource path="res://scenes/flying_area.gd" type="Script" id=21]
+[ext_resource path="res://scenes/sections/04_cave_diver/cave_section.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/boundaries.gd" type="Script" id=23]
+[ext_resource path="res://sfx/game_cleared.wav" type="AudioStream" id=24]
+[ext_resource path="res://scripts/pause_menu.gd" type="Script" id=25]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Appear"
@@ -79,10 +84,13 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10, 294.452 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 68, 168 )
+
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CenterContainer/Label:visible")
@@ -134,20 +142,191 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("CenterContainer/Label:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Level cleared!" ]
+}
 
-[node name="Main" type="Node2D"]
+[sub_resource type="Animation" id=7]
+resource_name = "Winning"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CenterContainer/Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("FxPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 24 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 4.7, 4.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CenterContainer/Label:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "Game cleared!", "Thanks for
+Playing!" ]
+}
 
-[node name="BaseSection" parent="." instance=ExtResource( 18 )]
+[sub_resource type="Animation" id=8]
+resource_name = "Appear"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 513, 65 ), Vector2( 366, 65 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, -2 ),
+"update": 0,
+"values": [ Vector2( 366, 65 ), Vector2( 513, 65 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 11 )
+hud_path = NodePath("HUDLayer/HUD")
+msg_box_path = NodePath("HUDLayer/MsgBox")
+tutorial_path = NodePath("GroundLevel/BaseSection/Tutorial")
+game_timer_path = NodePath("HUDLayer/Timer")
+player_path = NodePath("FlyingArea/Player")
+flying_area_path = NodePath("FlyingArea")
+ground_level_path = NodePath("GroundLevel")
+kill_area_path = NodePath("FlyingArea/KillArea")
+pause_menu_path = NodePath("HUDLayer/PauseMenu")
+sections = [ ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 22 ) ]
+
+[node name="GroundLevel" type="Node2D" parent="."]
+
+[node name="BaseSection" parent="GroundLevel" instance=ExtResource( 18 )]
 position = Vector2( 0, 65 )
 
-[node name="Tutorial" parent="BaseSection" instance=ExtResource( 7 )]
+[node name="Tutorial" parent="GroundLevel/BaseSection" instance=ExtResource( 7 )]
 position = Vector2( 38, 287 )
 
-[node name="MainMenu" type="Node2D" parent="BaseSection"]
+[node name="MainMenu" type="Node2D" parent="GroundLevel/BaseSection"]
 script = ExtResource( 20 )
-game_path = NodePath("../../Game")
+game_path = NodePath("../../..")
 
-[node name="Panel" type="Panel" parent="BaseSection/MainMenu"]
+[node name="Panel" type="Panel" parent="GroundLevel/BaseSection/MainMenu"]
 margin_left = 513.0
 margin_top = 65.0
 margin_right = 656.006
@@ -156,7 +335,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="BaseSection/MainMenu/Panel"]
+[node name="Label" type="Label" parent="GroundLevel/BaseSection/MainMenu/Panel"]
 margin_left = -15.0
 margin_top = -33.0
 margin_right = 161.0
@@ -168,7 +347,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BaseSection/MainMenu/Panel"]
+[node name="Main" type="VBoxContainer" parent="GroundLevel/BaseSection/MainMenu/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -179,91 +358,123 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Start" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+[node name="Start" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
 margin_right = 123.0
 margin_bottom = 24.0
 text = "Start"
 
-[node name="Levels" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+[node name="Levels" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
 margin_top = 28.0
 margin_right = 123.0
 margin_bottom = 52.0
 text = "Levels"
 
-[node name="Credits" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+[node name="Exit" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
 margin_top = 56.0
 margin_right = 123.0
 margin_bottom = 80.0
-text = "Credits"
+text = "Exit"
 
-[node name="Settings" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+[node name="Levels" type="VBoxContainer" parent="GroundLevel/BaseSection/MainMenu/Panel"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level1" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Levels"]
+margin_right = 123.0
+margin_bottom = 24.0
+text = "Level 1"
+
+[node name="Level2" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Levels"]
+margin_top = 28.0
+margin_right = 123.0
+margin_bottom = 52.0
+text = "Level 2"
+
+[node name="Level3" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Levels"]
+margin_top = 56.0
+margin_right = 123.0
+margin_bottom = 80.0
+text = "Level 3"
+
+[node name="Level4" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Levels"]
 margin_top = 84.0
 margin_right = 123.0
 margin_bottom = 108.0
-text = "Settigns"
+text = "Level 4"
 
-[node name="Exit" type="Button" parent="BaseSection/MainMenu/Panel/VBoxContainer"]
+[node name="Back" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Levels"]
 margin_top = 112.0
 margin_right = 123.0
 margin_bottom = 136.0
-text = "Exit"
+text = "Back"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BaseSection/MainMenu"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GroundLevel/BaseSection/MainMenu"]
 anims/Appear = SubResource( 1 )
 anims/Disappear = SubResource( 2 )
 
-[node name="Game" type="Node2D" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "Music"
+script = ExtResource( 6 )
+tutorial_path = NodePath("../GroundLevel/BaseSection/Tutorial")
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="FlyingArea" type="Node2D" parent="."]
 position = Vector2( 0, 64 )
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_group_": true
-}
-hud_path = NodePath("../HUDLayer/HUD")
-msg_box_path = NodePath("../HUDLayer/MsgBox")
-tutorial_path = NodePath("../BaseSection/Tutorial")
-current_section = 0
-sections = [ ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ]
+script = ExtResource( 21 )
 
-[node name="CurrentSection" type="Node2D" parent="Game"]
+[node name="FlyingSection" type="Node2D" parent="FlyingArea"]
 
-[node name="Player" parent="Game" instance=ExtResource( 15 )]
+[node name="Player" parent="FlyingArea" instance=ExtResource( 15 )]
 position = Vector2( 176, 181 )
 controllable = false
 
-[node name="Boundaries" type="StaticBody2D" parent="Game"]
-visible = false
+[node name="Boundaries" type="StaticBody2D" parent="FlyingArea"]
 collision_layer = 512
 collision_mask = 0
+script = ExtResource( 23 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Boundaries"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlyingArea/Boundaries"]
 position = Vector2( -9.65075, 140.714 )
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Game/Boundaries"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="FlyingArea/Boundaries"]
 position = Vector2( 522.3, 146.175 )
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Boundaries"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FlyingArea/Boundaries"]
 position = Vector2( 248.308, -11.1825 )
 rotation = 1.5708
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Game/Boundaries"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="FlyingArea/Boundaries"]
 position = Vector2( 241.021, 298.828 )
 rotation = 1.5708
 shape = SubResource( 3 )
 
-[node name="Tween" type="Tween" parent="Game"]
-
-[node name="Camera2D" type="Camera2D" parent="Game"]
+[node name="AreaCamera" type="Camera2D" parent="FlyingArea"]
 anchor_mode = 0
 current = true
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="Game"]
-stream = ExtResource( 9 )
-bus = "Music"
-script = ExtResource( 6 )
-tutorial_path = NodePath("../../BaseSection/Tutorial")
+[node name="KillArea" type="Area2D" parent="FlyingArea"]
+position = Vector2( -93, 141 )
+monitorable = false
+collision_layer = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlyingArea/KillArea"]
+shape = SubResource( 4 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -350,7 +561,7 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 44.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "HP:"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -373,7 +584,7 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 44.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "00:00"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -383,7 +594,6 @@ __meta__ = {
 autostart = true
 
 [node name="MsgBox" type="Panel" parent="HUDLayer"]
-visible = false
 modulate = Color( 0, 0, 0, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -409,19 +619,100 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HUDLayer/MsgBox/CenterContainer"]
-margin_left = 14.0
-margin_top = 28.0
-margin_right = 228.0
-margin_bottom = 44.0
-text = "Section Cleared!"
+margin_left = 51.0
+margin_top = 19.0
+margin_right = 191.0
+margin_bottom = 54.0
+text = "Thanks for
+Playing!"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUDLayer/MsgBox"]
-anims/Success = SubResource( 5 )
+anims/Success = SubResource( 6 )
+anims/Winning = SubResource( 7 )
 
 [node name="FxPlayer" type="AudioStreamPlayer" parent="HUDLayer/MsgBox"]
-stream = ExtResource( 8 )
+stream = ExtResource( 24 )
 bus = "SFX"
 
-[connection signal="pressed" from="BaseSection/MainMenu/Panel/VBoxContainer/Start" to="BaseSection/MainMenu" method="_on_Start_pressed"]
-[connection signal="pressed" from="BaseSection/MainMenu/Panel/VBoxContainer/Exit" to="BaseSection/MainMenu" method="_on_Exit_pressed"]
+[node name="PauseMenu" type="Node2D" parent="HUDLayer"]
+pause_mode = 2
+visible = false
+position = Vector2( 2, 65 )
+script = ExtResource( 25 )
+
+[node name="Panel" type="Panel" parent="HUDLayer/PauseMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 513.0
+margin_top = 65.0
+margin_right = 656.008
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUDLayer/PauseMenu/Panel"]
+margin_left = -15.0
+margin_top = -33.0
+margin_right = 161.0
+margin_bottom = 2.0
+text = "Moon
+Defense"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="VBoxContainer" parent="HUDLayer/PauseMenu/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Button" parent="HUDLayer/PauseMenu/Panel/Main"]
+margin_right = 124.0
+margin_bottom = 24.0
+text = "Continue"
+
+[node name="Restart" type="Button" parent="HUDLayer/PauseMenu/Panel/Main"]
+margin_top = 28.0
+margin_right = 124.0
+margin_bottom = 52.0
+text = "Restart"
+
+[node name="Menu" type="Button" parent="HUDLayer/PauseMenu/Panel/Main"]
+margin_top = 56.0
+margin_right = 124.0
+margin_bottom = 80.0
+text = "MENU"
+
+[node name="Exit" type="Button" parent="HUDLayer/PauseMenu/Panel/Main"]
+margin_top = 84.0
+margin_right = 124.0
+margin_bottom = 108.0
+text = "Exit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUDLayer/PauseMenu"]
+anims/Appear = SubResource( 8 )
+anims/Disappear = SubResource( 9 )
+
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Start" to="GroundLevel/BaseSection/MainMenu" method="_on_Start_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Levels" to="GroundLevel/BaseSection/MainMenu" method="_on_Levels_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Exit" to="GroundLevel/BaseSection/MainMenu" method="_on_Exit_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Levels/Level1" to="GroundLevel/BaseSection/MainMenu" method="_on_Level1_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Levels/Level2" to="GroundLevel/BaseSection/MainMenu" method="_on_Level2_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Levels/Level3" to="GroundLevel/BaseSection/MainMenu" method="_on_Level3_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Levels/Level4" to="GroundLevel/BaseSection/MainMenu" method="_on_Level4_pressed"]
+[connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Levels/Back" to="GroundLevel/BaseSection/MainMenu" method="_on_Back_pressed"]
 [connection signal="timeout" from="HUDLayer/Timer/Timer" to="HUDLayer/Timer" method="_on_Timer_timeout"]
+[connection signal="pressed" from="HUDLayer/PauseMenu/Panel/Main/Continue" to="HUDLayer/PauseMenu" method="_on_Continue_pressed"]
+[connection signal="pressed" from="HUDLayer/PauseMenu/Panel/Main/Restart" to="HUDLayer/PauseMenu" method="_on_Restart_pressed"]
+[connection signal="pressed" from="HUDLayer/PauseMenu/Panel/Main/Menu" to="HUDLayer/PauseMenu" method="_on_Menu_pressed"]
+[connection signal="pressed" from="HUDLayer/PauseMenu/Panel/Main/Exit" to="HUDLayer/PauseMenu" method="_on_Exit_pressed"]

@@ -19,7 +19,6 @@ onready var invul_timer: Timer = $InvulTimer
 enum FlightDirection {UP, DOWN}
 
 var velocity: Vector2
-var player: Player
 var dead: bool = false
 var invulnerable: bool = false
 
@@ -90,7 +89,7 @@ func shoot_left():
 
 func shoot_at_player():
 	var b = make_bullet()
-	var player = get_tree().root.get_node("Main/Game").player
+	var player = get_tree().root.get_node("Game").player
 	if is_instance_valid(player):
 		var random_offset = Vector2(rand_range(-accuracy, accuracy), rand_range(-accuracy, accuracy))
 		b.shoot(b.position.direction_to(player.position + random_offset))
@@ -107,7 +106,7 @@ func move(direction: int, time: float):
 	velocity.y = 0
 
 func shoot_burst(shots: int, delay: float, target=false):
-	for i in range(shots):
+	for _i in range(shots):
 		if target:
 			shoot_at_player()
 		else:

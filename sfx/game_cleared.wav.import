@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/game_cleared.wav-5f3baa6ea4e83c358db507ee904fee5f.sample"
+
+[deps]
+
+source_file="res://sfx/game_cleared.wav"
+dest_files=[ "res://.import/game_cleared.wav-5f3baa6ea4e83c358db507ee904fee5f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

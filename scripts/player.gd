@@ -7,7 +7,7 @@ var input_vec: Vector2
 var velocity: Vector2
 var sprite: AnimatedSprite
 var max_speed = 100
-var health = 3
+var health = 5
 var invulnerable = false
 
 signal hp_changed(new_hp)
@@ -30,7 +30,7 @@ func _ready():
 	print(get_path())
 	emit_signal("hp_changed", health)
 
-func _input(event):
+func _input(_event):
 	if not controllable:
 		return
 	input_vec = Vector2.ZERO
@@ -101,14 +101,16 @@ func hurt():
 	health = max(health-1, 0)
 	emit_signal("hp_changed", health)
 	if health <= 0:
-		var e = Explosion.instance()
-		e.position = self.position
-		get_parent().add_child(e)
-		queue_free()
-		emit_signal("died")
+		kill()
 	else:
 		make_invul(1.0)
 		$AudioStreamPlayer.stream = preload("res://sfx/hurt_01.wav")
 		$AudioStreamPlayer.play()
 
+func kill():
+	var e = Explosion.instance()
+	e.position = self.position
+	get_parent().add_child(e)
+	queue_free()
+	emit_signal("died")
 

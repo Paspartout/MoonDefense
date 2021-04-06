@@ -10,6 +10,5 @@ func _ready():
 
 func asteroids_changed():
 	if asteroids.get_child_count() <= 0:
-		print("Asteroids cleared!")
 		emit_signal("cleared")
 		queue_free()
