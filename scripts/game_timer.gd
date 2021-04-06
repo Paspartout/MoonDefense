@@ -9,4 +9,5 @@ func _ready():
 
 func _on_Timer_timeout():
 	time_s += 1
+	# warning-ignore:integer_division
 	label.text = "%02d:%02d" % [time_s / 60, time_s % 60]

@@ -27,7 +27,6 @@ const Explosion = preload("res://scenes/explosion.tscn")
 func _ready():
 	velocity = Vector2.ZERO
 	sprite = get_node("AnimatedSprite")
-	print(get_path())
 	emit_signal("hp_changed", health)
 
 func _input(_event):

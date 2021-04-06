@@ -47,28 +47,25 @@ func _get_configuration_warning():
 var old_speed: float = 100
 
 func _input(event):
-	if Input.is_action_just_pressed("stop"):
+	if event.is_action_pressed("stop"):
 		old_speed = flying_area.movement_speed
 		tween.interpolate_property(flying_area, "movement_speed",
 				null, 25, 0.2,
 				Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		tween.start()
-	if Input.is_action_just_released("stop"):
+	if event.is_action_released("stop"):
 		flying_area.movement_speed = old_speed
 		tween.interpolate_property(flying_area, "movement_speed",
 				null, old_speed, 0.2,
 				Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		tween.start()
-
-	if Input.is_action_just_released("pause"):
+	if event.is_action_pressed("pause"):
 		flying_area.movement_speed = old_speed
 		pause_menu.pause()
-
-	if Input.is_action_just_released("screenshot"):
+	if event.is_action_pressed("screenshot"):
 		var image = get_viewport().get_texture().get_data()
 		image.flip_y()
 		image.save_png("screenshot.png")
-
 
 	if debug_enabled:
 		if Input.is_action_just_pressed("debug_hurt"):
@@ -97,11 +94,10 @@ func start():
 		tutorial.start()
 		tutorial.connect("done", self, "tutorial_done")
 
-func setup_player(player: Player):
-	hud.set_player(player)
-	player.connect("died", self, "death")
-	#player.position = Vector2(100, 100)
-	return player
+func setup_player(p: Player):
+	hud.set_player(p)
+	p.connect("died", self, "death")
+	return p
 
 func spawn_player():
 	if is_instance_valid(player):
@@ -115,7 +111,6 @@ func death():
 	call_deferred("respawn_player")
 
 func respawn_player():
-	print("respawning")
 	kill_area.monitoring = false
 	var lpf: AudioEffectLowPassFilter = AudioServer.get_bus_effect(1, 0)
 	AudioServer.set_bus_effect_enabled(1, 0, true)
@@ -259,7 +254,7 @@ func next_section():
 
 	load_section()
 
-func killarea_entered(body):
+func killarea_entered(_body):
 	kill_area.set_deferred("monitoring", false)
 	player.kill()
 
