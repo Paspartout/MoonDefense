@@ -3,9 +3,14 @@ extends KinematicBody2D
 
 export var controllable = true
 
+onready var sprite: Sprite = $Sprite
+onready var shoot_timer: Timer = $ShootTimer
+onready var invul_timer: Timer = $InvulTimer
+onready var audio: AudioStreamPlayer = $AudioFx
+
 var input_vec: Vector2
 var velocity: Vector2
-var sprite: AnimatedSprite
+
 var max_speed = 100
 var health = 5
 var invulnerable = false
@@ -26,7 +31,6 @@ const Explosion = preload("res://scenes/explosion.tscn")
 # Called when t1he node enters the scene tree for the first time.
 func _ready():
 	velocity = Vector2.ZERO
-	sprite = get_node("AnimatedSprite")
 	emit_signal("hp_changed", health)
 
 func _input(_event):
@@ -45,9 +49,9 @@ func _input(_event):
 
 	if Input.is_action_just_pressed("shoot"):
 		on_shoot()
-		$ShootTimer.start()
+		shoot_timer.start()
 	elif Input.is_action_just_released("shoot"):
-		$ShootTimer.stop()
+		shoot_timer.stop()
 
 func _physics_process(delta):
 	if controllable:
@@ -86,13 +90,13 @@ func on_shoot():
 
 func make_invul(time: float):
 	invulnerable = true
-	$AnimatedSprite.material.set_shader_param("flash_white", true)
-	$InvulTimer.wait_time = time
-	$InvulTimer.start()
+	sprite.material.set_shader_param("flash_white", true)
+	invul_timer.wait_time = time
+	invul_timer.start()
 		
 func on_invul_over():
 	invulnerable = false
-	$AnimatedSprite.material.set_shader_param("flash_white", false)
+	sprite.material.set_shader_param("flash_white", false)
 
 func hurt():
 	if invulnerable or health <= 0:
@@ -103,8 +107,8 @@ func hurt():
 		kill()
 	else:
 		make_invul(1.0)
-		$AudioStreamPlayer.stream = preload("res://sfx/hurt_01.wav")
-		$AudioStreamPlayer.play()
+		audio.stream = preload("res://sfx/hurt_01.wav")
+		audio.play()
 
 func kill():
 	var e = Explosion.instance()
@@ -112,4 +116,3 @@ func kill():
 	get_parent().add_child(e)
 	queue_free()
 	emit_signal("died")
-
