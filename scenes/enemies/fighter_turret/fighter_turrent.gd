@@ -7,11 +7,10 @@ export var burst_shots: int = 5
 
 var shoot = false
 
-func act_coro():
-	pass
-
 func shoot_coro():
 	while true:
+		if dead:
+			return
 		yield(wait_shoot(0.5), "completed")
 		if shoot:
 			yield(shoot_burst(burst_shots, burst_delay, true), "completed")

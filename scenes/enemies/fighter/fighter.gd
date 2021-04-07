@@ -18,6 +18,8 @@ func act_coro():
 	yield(move(FlightDirection.DOWN, 0.25), "completed")
 	
 	while true:
+		if dead:
+			return
 		yield(move(FlightDirection.UP, 0.5), "completed")
 		yield(wait_act(0.5), "completed")
 		yield(move(FlightDirection.DOWN, 0.5), "completed")
@@ -25,6 +27,8 @@ func act_coro():
 func shoot_coro():
 	yield(wait_shoot(shoot_start_delay), "completed")
 	while true:
+		if dead:
+			return
 		yield(shoot_burst(burst_shots, burst_delay, true), "completed")
 		yield(wait_shoot(between_burst_delay), "completed")
 

@@ -9,25 +9,31 @@ export var off_time: float = 3
 export var start_offset: float = 1
 
 func _ready():
-	act_coro()
 	beam.connect("body_entered", self, "laser_hit")
+	enable(false)
+	timer.wait_time = start_offset
+	timer.connect("timeout", self, "wait_over", [], CONNECT_ONESHOT)
+	timer.start()
+
+func wait_over():
+	timer.connect("timeout", self, "turn_on", [], CONNECT_ONESHOT)
+	timer.start()
+	
+func turn_on():
+	enable(true)
+	timer.wait_time = off_time
+	timer.start()
+	timer.connect("timeout", self, "turn_off", [], CONNECT_ONESHOT)
+
+func turn_off():
+	enable(false)
+	timer.wait_time = on_time
+	timer.start()
+	timer.connect("timeout", self, "turn_on", [], CONNECT_ONESHOT)
 
 func enable(on: bool):
 	sprite.visible = on
 	beam.monitoring = on
-
-func act_coro():
-	yield(wait(start_offset), "completed")
-	while true:
-		enable(false)
-		yield(wait(on_time), "completed")
-		enable(true)
-		yield(wait(off_time), "completed")
-
-func wait(time: float):
-	timer.wait_time = time
-	timer.start()
-	yield(timer, "timeout")
 
 func laser_hit(body):
 	if body.has_method("hurt"):

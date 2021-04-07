@@ -22,6 +22,9 @@ var velocity: Vector2
 var dead: bool = false
 var invulnerable: bool = false
 
+var acting_coro: GDScriptFunctionState
+var shooting_coro: GDScriptFunctionState
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	velocity = Vector2(0, 0)
@@ -42,8 +45,8 @@ func invul_timeout():
 	sprite.material.set_shader_param("flash_white", false)
 
 func _start():
-	act_coro()
-	shoot_coro()
+	acting_coro = act_coro()
+	shooting_coro = shoot_coro()
 
 func _physics_process(delta):
 	var c = move_and_collide(velocity * delta)
@@ -54,12 +57,22 @@ func _physics_process(delta):
 
 func hurt():
 	if not dead and not invulnerable:
-		dead = true
-		var e = Explosion.instance()
-		e.position = self.position
-		get_parent().add_child(e)
-		emit_signal("died")
-		queue_free()
+		kill()
+
+func kill():
+	dead = true
+	var e = Explosion.instance()
+	e.position = self.position
+	get_parent().add_child(e)
+	sprite.visible = false
+
+	emit_signal("died")
+	
+	if acting_coro:
+		yield(acting_coro, "completed")
+	if shooting_coro:
+		yield(shooting_coro, "completed")
+	queue_free()
 
 func wait_act(time: float):
 	act_timer.wait_time = time
@@ -72,10 +85,10 @@ func wait_shoot(time: float):
 	yield(shoot_timer, "timeout")
 
 func act_coro():
-	pass
+	return
 
 func shoot_coro():
-	pass
+	return
 
 func make_bullet():
 	var b = Bullet.instance()
@@ -88,6 +101,8 @@ func shoot_left():
 	get_parent().add_child(b)
 
 func shoot_at_player():
+	if dead:
+		return
 	var b = make_bullet()
 	var player = get_tree().root.get_node("Game").player
 	if is_instance_valid(player):
@@ -101,11 +116,17 @@ func shoot_at_player():
 	get_parent().add_child(b)
 
 func move(direction: int, time: float):
+	if dead:
+		yield(wait_act(0.01), "completed")
+		return
 	velocity.y = movement_speed if direction == FlightDirection.DOWN else -movement_speed
 	yield(wait_act(time), "completed")
 	velocity.y = 0
 
 func shoot_burst(shots: int, delay: float, target=false):
+	if dead:
+		yield(wait_shoot(0.01), "completed")
+		return
 	for _i in range(shots):
 		if target:
 			shoot_at_player()

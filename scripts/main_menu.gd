@@ -15,7 +15,7 @@ func start(level: int):
 	yield($AnimationPlayer, "animation_finished")
 	game.current_section = level
 	game.start()
-	queue_free()	
+	queue_free()
 
 func _on_Start_pressed():
 	start(0)

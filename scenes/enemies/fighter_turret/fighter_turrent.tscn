@@ -53,7 +53,6 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShootRadius"]
 position = Vector2( -115, 7.62939e-06 )
 shape = SubResource( 3 )
-
 [connection signal="timeout" from="LifeTimer" to="." method="_on_LifeTimer_timeout"]
 [connection signal="body_entered" from="ShootRadius" to="." method="_on_ShootRadius_body_entered"]
 [connection signal="body_exited" from="ShootRadius" to="." method="_on_ShootRadius_body_exited"]

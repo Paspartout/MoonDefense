@@ -11,11 +11,16 @@ func act_coro():
 	var opposite_direction = FlightDirection.UP if direction == FlightDirection.DOWN else FlightDirection.DOWN
 	while true:
 		for _i in range(hops):
+			if dead:
+				return
 			yield(move(direction, 0.25), "completed")
 			yield(shoot_burst(3, 0.15), "completed")
 			yield(wait_act(0.25), "completed")
 			
 		for _i in range(hops):
+			if dead:
+				return
 			yield(move(opposite_direction, 0.25), "completed")
 			yield(shoot_burst(3, 0.15), "completed")
 			yield(wait_act(0.25), "completed")
+

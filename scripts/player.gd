@@ -110,9 +110,10 @@ func hurt():
 		audio.stream = preload("res://sfx/hurt_01.wav")
 		audio.play()
 
-func kill():
+func kill(silent=false):
 	var e = Explosion.instance()
 	e.position = self.position
 	get_parent().add_child(e)
 	queue_free()
-	emit_signal("died")
+	if not silent:
+		emit_signal("died")

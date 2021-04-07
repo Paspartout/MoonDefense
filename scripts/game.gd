@@ -29,6 +29,7 @@ export var transition_delay: float = 3.0
 export var debug_enabled = false
 
 var current_movement_speed = 100
+var disable_menu: bool = false
 
 export(Array, PackedScene) var sections
 onready var n_sections = sections.size()
@@ -59,7 +60,7 @@ func _input(event):
 				null, old_speed, 0.2,
 				Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		tween.start()
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") and not disable_menu:
 		flying_area.movement_speed = old_speed
 		pause_menu.pause()
 	if event.is_action_pressed("screenshot"):
@@ -111,7 +112,10 @@ func death():
 	call_deferred("respawn_player")
 
 func respawn_player():
+	disable_menu = true
 	kill_area.monitoring = false
+	for e in get_tree().get_nodes_in_group("enemy"):
+		e.kill()
 	var lpf: AudioEffectLowPassFilter = AudioServer.get_bus_effect(1, 0)
 	AudioServer.set_bus_effect_enabled(1, 0, true)
 	tween.interpolate_property(lpf, "cutoff_hz", 20500, 100, 1,
@@ -130,9 +134,8 @@ func respawn_player():
 		Color(1,1,1,1), Color(1,1,1,0), 1,
 		Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 0.5)
 	tween.start()
-	
+
 	yield(tween, "tween_all_completed")
-	
 	for c in flying_section.get_children():
 		c.queue_free()
 	for c in ground_level.get_children():
@@ -159,6 +162,7 @@ func respawn_player():
 	flying_section.position = Vector2(0, 0)
 	load_section(false)
 	kill_area.monitoring = true
+	disable_menu = false
 
 func transition_flying(transition_time: float = 1.5):
 	var old_pos = flying_area.position
@@ -196,11 +200,14 @@ func transition_ground(transition_time: float = 1):
 			Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
 	yield(tween, "tween_all_completed")
+	
 
 func tutorial_done():
 	# Start Player/World Movement
 	$MusicPlayer.play()
+	disable_menu = true
 	yield(transition_flying(), "completed")
+	disable_menu = false
 
 	yield(get_tree().create_timer(3.0), "timeout")
 	for c in ground_level.get_children():
@@ -213,7 +220,9 @@ func load_section(transition=true):
 	current_movement_speed = next_section.movement_speed
 	if next_section.is_ground_section:
 		if transition:
+			disable_menu = true
 			yield(transition_ground(), "completed")
+			disable_menu = false
 		next_section.position.x = flying_area.position.x + 600
 		next_section.position.y = 65
 		ground_level.add_child(next_section)

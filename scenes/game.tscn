@@ -312,6 +312,7 @@ flying_area_path = NodePath("FlyingArea")
 ground_level_path = NodePath("GroundLevel")
 kill_area_path = NodePath("FlyingArea/KillArea")
 pause_menu_path = NodePath("HUDLayer/PauseMenu")
+debug_enabled = true
 sections = [ ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 22 ) ]
 
 [node name="GroundLevel" type="Node2D" parent="."]
@@ -360,19 +361,19 @@ __meta__ = {
 
 [node name="Start" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
 margin_right = 123.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 text = "Start"
 
 [node name="Levels" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
-margin_top = 28.0
+margin_top = 26.0
 margin_right = 123.0
-margin_bottom = 52.0
+margin_bottom = 48.0
 text = "Levels"
 
 [node name="Exit" type="Button" parent="GroundLevel/BaseSection/MainMenu/Panel/Main"]
-margin_top = 56.0
+margin_top = 52.0
 margin_right = 123.0
-margin_bottom = 80.0
+margin_bottom = 74.0
 text = "Exit"
 
 [node name="Levels" type="VBoxContainer" parent="GroundLevel/BaseSection/MainMenu/Panel"]
@@ -702,7 +703,6 @@ text = "Exit"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUDLayer/PauseMenu"]
 anims/Appear = SubResource( 8 )
 anims/Disappear = SubResource( 9 )
-
 [connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Start" to="GroundLevel/BaseSection/MainMenu" method="_on_Start_pressed"]
 [connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Levels" to="GroundLevel/BaseSection/MainMenu" method="_on_Levels_pressed"]
 [connection signal="pressed" from="GroundLevel/BaseSection/MainMenu/Panel/Main/Exit" to="GroundLevel/BaseSection/MainMenu" method="_on_Exit_pressed"]
